@@ -5,7 +5,7 @@ import ProjectsSidebar from "./components/ProjectsSideBar";
 
 function App() {
   const [projectsState, setProjectsState] = useState({
-    selectedProject: undefined,
+    selectedProjectId: undefined,
     projects: [],
   });
 
@@ -18,10 +18,35 @@ function App() {
     });
   }
 
+  function handleAddProject(projectData) {
+    const projectId = Math.round();
+    setProjectsState((prevState) => {
+      const newProject = {
+        ...projectData,
+        id: projectId,
+      };
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        projects: [...prevState.projects, newProject],
+      };
+    });
+  }
+
+  let content;
+  if (projectsState.selectedProjectId === null) {
+    content = <NewProject onAdd={handleAddProject} />;
+  } else if (projectsState.selectedProjectId === undefined) {
+    content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
+  }
+
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar onStartAddProject={handleStartAddProject}/>
-      <NoProjectSelected onStartAddProject={handleStartAddProject}/>
+      <ProjectsSidebar
+        onStartAddProject={handleStartAddProject}
+        projects={projectsState.projects}
+      />
+      {content}
     </main>
   );
 }
