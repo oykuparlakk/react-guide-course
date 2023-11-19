@@ -9,7 +9,7 @@ const Input = forwardRef(function Input({ label, textArea, ...props }, ref) {
         {label}
       </label>
       {textArea ? (
-        <textArea ref={ref} className={classes} {...props} />
+        <textarea ref={ref} className={classes} {...props} />
       ) : (
         <input ref={ref} className={classes} {...props} />
       )}
