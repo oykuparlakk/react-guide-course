@@ -18,6 +18,19 @@ function App() {
       };
     });
   }
+
+  function handleDeleteProject() {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        projects: projectsState.projects.filter(
+          (project) => project.id !== prevState.selectedProjectId
+        ),
+      };
+    });
+  }
+
   function handleStartAddProject() {
     setProjectsState((prevState) => {
       return {
@@ -37,7 +50,7 @@ function App() {
   }
 
   function handleAddProject(projectData) {
-    const projectId = Math.random();
+    const projectId = projectsState.projects.length + 1;
     setProjectsState((prevState) => {
       const newProject = {
         ...projectData,
@@ -50,12 +63,16 @@ function App() {
       };
     });
   }
+  console.log("projectsState.projects", projectsState.projects);
 
   const selectedProject = projectsState.projects.find(
     (project) => project.id === projectsState.selectedProjectId
   );
 
-  let content = <SelectedProject project={selectedProject} />;
+  console.log("selectedProject", selectedProject);
+  let content = (
+    <SelectedProject project={selectedProject} onDelete={handleDeleteProject} />
+  );
 
   if (projectsState.selectedProjectId === null) {
     content = (
