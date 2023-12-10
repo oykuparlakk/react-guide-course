@@ -13,14 +13,6 @@ export default function Login() {
     event.preventDefault();
   }
 
-  function handleEmailChange(event) {
-    setEnteredEmail(event.target.value);
-  }
-
-  function handlePasswordChange(event) {
-    setEnteredPassword(event.target.value);
-  }
-
   function handleInputChange(identifier, value) {
     setEnteredValues((prevValues) => ({
       ...prevValues,
